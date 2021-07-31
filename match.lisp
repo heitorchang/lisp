@@ -1,8 +1,6 @@
 (defpackage "MATCH"
   (:use "COMMON-LISP"))
 
-(in-package "MATCH")
-
 (defun variablep (s)
   (and (symbolp s)
        (char= (char (symbol-name s) 0) #\?)))
@@ -28,3 +26,16 @@
   (cond ((and (null l1) (null l2)) t)
         ((not (match-? (car l1) (car l2))) nil)
         (t (matchlelt (cdr l1) (cdr l2)))))
+
+(shadow 'boundp)
+
+(defun boundp (v subs)
+  (cond ((null subs) nil)
+        ((eql v (caar subs)) t)
+        (t (boundp v (cdr subs)))))
+
+(defun bound-to (v subs)
+  (cond ((null subs) nil)
+        ((eql v (caar subs)) (cadar subs))
+        (t (bound-to v (cdr subs)))))
+
