@@ -18,4 +18,13 @@
   (if (eql arg '?)
       t
       nil))
-      
+
+(defun match-? (arg1 arg2)
+  (cond ((dont-care arg1) t)
+        ((dont-care arg2) t)
+        (t (eql arg1 arg2))))
+
+(defun matchlelt (l1 l2)
+  (cond ((and (null l1) (null l2)) t)
+        ((not (match-? (car l1) (car l2))) nil)
+        (t (matchlelt (cdr l1) (cdr l2)))))
