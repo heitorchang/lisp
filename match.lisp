@@ -1,5 +1,5 @@
-(defpackage "MATCH"
-  (:use "COMMON-LISP"))
+;; (defpackage "MATCH"
+;;   (:use "COMMON-LISP"))
 
 (defun variablep (s)
   (and (symbolp s)
@@ -27,12 +27,12 @@
         ((not (match-? (car l1) (car l2))) nil)
         (t (matchlelt (cdr l1) (cdr l2)))))
 
-(shadow 'boundp)
+;; (shadow 'boundp)
 
-(defun boundp (v subs)
+(defun my-boundp (v subs)
   (cond ((null subs) nil)
         ((eql v (caar subs)) t)
-        (t (boundp v (cdr subs)))))
+        (t (my-boundp v (cdr subs)))))
 
 (defun bound-to (v subs)
   (cond ((null subs) nil)
